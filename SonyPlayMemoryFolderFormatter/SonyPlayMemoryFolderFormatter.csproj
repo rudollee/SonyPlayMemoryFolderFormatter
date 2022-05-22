@@ -98,6 +98,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+<<<<<<< .merge_file_a15464
+=======
+    <Content Include="Issue22523-02.txt" />
+>>>>>>> .merge_file_a14224
     <Content Include="Issue22523.txt" />
     <Content Include="Readme.txt" />
   </ItemGroup>
