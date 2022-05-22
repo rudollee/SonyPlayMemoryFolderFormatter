@@ -14,6 +14,7 @@ namespace SonyPlayMemoryFolderFormatter
         public ProjectInstaller()
         {
             InitializeComponent();
+
         }
     }
 }
