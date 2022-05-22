@@ -26,7 +26,7 @@ namespace SonyPlayMemoryFolderFormatter
             _sonyWatcher.Path = _folderToWatch;
             _sonyWatcher.Created +=_sonyWatcher_Created;
 
-            _timer.Interval = 4000;
+            _timer.Interval = 3500;
             _timer.Elapsed +=_timer_Elapsed;
         }
 
