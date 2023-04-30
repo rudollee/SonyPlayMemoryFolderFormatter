@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.ServiceProcess;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 
@@ -32,7 +33,14 @@ namespace SonyPlayMemoryFolderFormatter
 
         private void _timer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            _directories.ForEach(f => f.MoveTo(f.FullName.Replace("-", "")));
+            _directories.ForEach(f => {
+                while (Locked(f.FullName))
+                {
+                    Thread.Sleep(500);
+                }
+                f.MoveTo(f.FullName.Replace("-", ""));
+            });
+            
             _timer.Stop();
         }
 
@@ -45,6 +53,28 @@ namespace SonyPlayMemoryFolderFormatter
             }
 
             _timer.Start();
+        }
+
+        private bool Locked(string filename)
+        {
+            FileStream stream = null;
+            try
+            {
+                stream = File.Open(filename, FileMode.Open, FileAccess.ReadWrite, FileShare.None);
+            }
+            catch (Exception)
+            {
+                return true;
+            }
+            finally
+            {
+                if (stream != null)
+                {
+                    stream.Close();
+                }
+            }
+
+            return false;
         }
 
         protected override void OnStart(string[] args)
